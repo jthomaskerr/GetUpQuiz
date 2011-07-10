@@ -1,0 +1,14 @@
+<h1>List of persons</h1>
+
+<table border="1">
+  <tr><th>Id</th><th>Name</th><th>postcode_id</th><th>email</th></tr>
+  <% for person in @people %>
+    <tr>
+      <td><%= person.id %></td>
+      <td><%= person.name %></td>
+      <td align="right"><%= person.postcode_id %></td>
+      <td><%= person.email %></td>
+    </tr>
+  <% end %>
+</table>
+        
