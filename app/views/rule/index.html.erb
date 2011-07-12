@@ -1,0 +1,37 @@
+<h1>GetUp! Coding test</h1>
+
+<%= form_tag(@frm, :method => "get") do %>
+    <p>Enter a query rule. You can use parentheses, AND, OR, =, !=, LIKE and NOT LIKE (LIKE evaluates a partial match against a regular expression pattern).</p>
+    <p>Valid fields are id, name, postcode_id, postcode, suburb, email.</p>
+    <p>String literals must be enclosed in double quote marks (").</p>
+    <p>Everything is case sensitive (operators, field names and values)</p>
+
+    <br/>
+
+    <%= text_field_tag(:rule, @rule, :size => 80, :placeholder => "Enter a query rule...") %>
+    <%= submit_tag("Execute") %>
+<% end %>
+
+<br><br>
+
+<% unless @rule.nil? or @rule.empty? %>
+    <%  test_result = execute(@rule) %>
+    <% if test_result.respond_to? :each %>
+      <table border="1">
+        <tr><th>id</th><th>name</th><th>postcode</th><th>suburb</th><th>email</th></tr>
+        <% for person in test_result %>
+           <% if not person.nil? %>
+              <tr>
+                <td><%= person.id %></td>
+                <td><%= person.name %></td>
+                <td><%= postcode(person.postcode_id).number %></td>
+                <td><%= postcode(person.postcode_id).suburb %></td>
+                <td><%= person.email %></td>
+              </tr>
+           <% end %>
+        <% end %>
+      </table>
+    <% else %>
+        <p><%= raw(test_result) %></p>
+    <% end %>
+<% end %>

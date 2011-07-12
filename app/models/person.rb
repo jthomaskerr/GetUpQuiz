@@ -19,11 +19,31 @@ class Person < CSV_Model
     @email = attributes['email']
   end
 
+  def equal?(other)
+    super and
+    @name = other.name and
+    @postcode_id = other.postcode_id and
+    @email = other.email
+  end
+
   def to_s
     "Person #{@id} is #{@name}: Postcode #{@postcode_id}, Email #{@email}"
   end
 
+  def [](identifier)
+    case identifier
+      when "name"
+        @name
+      when "postcode_id"
+        @postcode_id
+      when "email"
+        @email
+      else
+        super
+    end
+  end
+
   def self.Load
-    CSV_Model::Load PEOPLE, Person
+    super PEOPLE, Person
   end
 end
