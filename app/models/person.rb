@@ -9,21 +9,13 @@
 require 'CSV'
 
 class Person < CSV_Model
-  PEOPLE = RAILS_ROOT + "/data/people.csv"
   attr_accessor :name, :postcode_id, :email
-
-  def initialize(attributes)
-    super
-    @name = attributes['name']
-    @postcode_id = attributes['postcode_id']
-    @email = attributes['email']
-  end
 
   def equal?(other)
     super and
-    @name = other.name and
-    @postcode_id = other.postcode_id and
-    @email = other.email
+    @name        == other.name        and
+    @postcode_id == other.postcode_id and
+    @email       == other.email
   end
 
   def to_s
@@ -43,7 +35,15 @@ class Person < CSV_Model
     end
   end
 
-  def self.Load
-    super PEOPLE, Person
+  def self.load(people_filename)
+    super people_filename, Person
+  end
+
+private
+  def initialize(attributes)
+    super
+    @name = attributes['name']
+    @postcode_id = attributes['postcode_id'].to_i
+    @email = attributes['email']
   end
 end

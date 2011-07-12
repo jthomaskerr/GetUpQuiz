@@ -16,13 +16,4 @@ gem 'uglifier'
 gem 'jquery-rails'
 
 gem 'parslet'
-
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug'
-
+gem 'test-unit'

@@ -4,11 +4,12 @@ class CSV_Model
   attr_accessor :id
 
   def initialize(attributes)
-    @id = attributes['id']
+    @id = attributes['id'].to_i
   end
 
   def equal?(other)
-    @id = other.id
+    not other.nil? and
+    @id == other.id
   end
 
   def [](identifier)
@@ -20,7 +21,7 @@ class CSV_Model
   end
 
   # Returns an array of all the objects described in the csv file
-  def self.Load(file,object_type)
+  def self.load(file,object_type)
     items = Array.new
     CSV.foreach(file,
              :headers => true,

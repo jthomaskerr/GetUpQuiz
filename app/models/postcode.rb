@@ -6,28 +6,20 @@
 #   :suburb => suburb of postcode
 
 class Postcode < CSV_Model
-  POSTCODES = RAILS_ROOT + "/data/postcodes.csv"
-
   attr_accessor :number, :suburb
 
-  def initialize(attributes)
-    super
-    @number = attributes['number'].to_i
-    @suburb = attributes['suburb']
+  def self.load(postcodes_filename)
+    super postcodes_filename, Postcode
   end
 
   def equal?(other)
     super and
-    @number = other.number and
-    @suburb = other.suburb
+    @number == other.number and
+    @suburb == other.suburb
   end
 
   def to_s
     "Postcode #{@id} is #{@number}: Suburb #{@suburb}"
-  end
-
-  def self.Load
-    super POSTCODES, Postcode
   end
 
   def [](identifier)
@@ -39,5 +31,12 @@ class Postcode < CSV_Model
       else
         super
       end
+  end
+
+private
+  def initialize(attributes)
+    super
+    @number = attributes['number'].to_i
+    @suburb = attributes['suburb']
   end
 end

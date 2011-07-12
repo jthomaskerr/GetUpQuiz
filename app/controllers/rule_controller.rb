@@ -3,14 +3,17 @@ require 'expression_parser'
 require 'predicate_evaluator'
 
 class RuleController < ApplicationController
+  PEOPLE    = RAILS_ROOT + "/data/people.csv"
+  POSTCODES = RAILS_ROOT + "/data/postcodes.csv"
+
   helper_method :postcode
   helper_method :execute
 
   include PredicateEvaluator
 
   def initialize
-    @people = Person.Load
-    @postcodes = Postcode.Load
+    @people = Person.load PEOPLE
+    @postcodes = Postcode.load POSTCODES
     @frm = nil
   end
 
