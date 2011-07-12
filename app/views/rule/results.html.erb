@@ -1,0 +1,26 @@
+<input name="rule">
+
+<% test_result = execute(test) %>
+<% if @errors.empty? %>
+
+  <table border="1">
+    <tr><th>Id</th><th>Name</th><th>postcode</th><th>suburb</th><th>email</th></tr>
+    <% for person in test_result %>
+       <% if not person.nil? %>
+          <tr>
+            <td><%= person.id %></td>
+            <td><%= person.name %></td>
+            <td><%= postcode(person.postcode_id).number %></td>
+            <td><%= postcode(person.postcode_id).suburb %></td>
+            <td><%= person.email %></td>
+          </tr>
+       <% end %>
+    <% end %>
+  </table>
+<% else %>
+    <% for error in @errors %>
+       <table border="1">
+         <tr><%= raw(error) %></tr>
+       </table>
+    <% end %>
+<% end %>
