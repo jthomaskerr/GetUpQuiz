@@ -6,8 +6,6 @@
 #   :postcode_id => index to postcode model for person's address
 #   :email => email address of person
 
-require 'CSV'
-
 class Person < CSV_Model
   attr_accessor :name, :postcode_id, :email
 
