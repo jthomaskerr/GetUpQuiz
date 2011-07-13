@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'thin', :group => :production
+gem 'thin', :group => :deployment
 gem 'rails', '3.1.0.rc4'
 
 gem 'ruby-prof'
