@@ -13,3 +13,5 @@ gem 'uglifier'
 gem 'jquery-rails'
 
 gem 'parslet'
+
+gem 'thin'
