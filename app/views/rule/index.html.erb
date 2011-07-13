@@ -1,4 +1,5 @@
-<h1>GetUp! Coding test</h1>
+<img src="getup.jpg">
+<h1>Coding task</h1>
 
 <%= form_tag(@frm, :method => "get") do %>
     <p>Enter a query rule. You can use parentheses, AND, OR, =, !=, LIKE and NOT LIKE (LIKE evaluates a partial match against a regular expression pattern).</p>
@@ -14,24 +15,29 @@
 
 <br><br>
 
-<% unless @rule.nil? or @rule.empty? %>
-    <%  test_result = execute(@rule) %>
-    <% if test_result.respond_to? :each %>
-      <table border="1">
-        <tr><th>id</th><th>name</th><th>postcode</th><th>suburb</th><th>email</th></tr>
-        <% for person in test_result %>
-           <% if not person.nil? %>
-              <tr>
-                <td><%= person.id %></td>
-                <td><%= person.name %></td>
-                <td><%= postcode(person.postcode_id).number %></td>
-                <td><%= postcode(person.postcode_id).suburb %></td>
-                <td><%= person.email %></td>
-              </tr>
-           <% end %>
-        <% end %>
-      </table>
-    <% else %>
-        <p><%= raw(test_result) %></p>
+<%
+   if @rule.nil? or @rule.empty? then
+       the_rule = 'id != 0'                # this is to display all the people at the start
+   else
+       the_rule = @rule
+   end
+%>
+<%  test_result = execute(the_rule) %>
+<% if test_result.respond_to? :each %>
+  <table border="1">
+    <tr><th>id</th><th>name</th><th>postcode</th><th>suburb</th><th>email</th></tr>
+    <% for person in test_result %>
+       <% if not person.nil? %>
+          <tr>
+            <td><%= person.id %></td>
+            <td><%= person.name %></td>
+            <td><%= postcode(person.postcode_id).number %></td>
+            <td><%= postcode(person.postcode_id).suburb %></td>
+            <td><%= person.email %></td>
+          </tr>
+       <% end %>
     <% end %>
+  </table>
+<% else %>
+    <p><%= raw(test_result) %></p>
 <% end %>

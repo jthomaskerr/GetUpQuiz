@@ -1,12 +1,16 @@
-module PredicateEvaluator
+module PeoplePredicateEvaluator
 
+  # TODO: this could be more general and reusable
   def eval_predicate(identifier, &block)
     result = Set.new
     @people.each do |person|
       unless person.nil?
-        if yield(person[identifier])
-          result << person
-        elsif yield(postcode(person.postcode_id)[identifier])
+        # try to find the identifier in the person table then in the postcode table
+        value = person[identifier]
+        if value.nil? then
+          value = postcode(person.postcode_id)[identifier]
+        end
+        if not value.nil? and yield(value) then # evaluate the predicate
           result << person
         end
       end
@@ -16,29 +20,17 @@ module PredicateEvaluator
 
   def eval_equals(identifier, value, invert)
     eval_predicate(identifier) { |a|
-      if a.nil?
-        false
-      else
-        if invert
-          a != value
-        else
-          a == value
-        end
-      end
+      result = (a == value)
+      if invert then result = (not result) end
+      result
     }
   end
 
   def eval_like(identifier, pattern, invert)
     eval_predicate(identifier) { |a|
-      if a.nil?
-        false
-      else
-        if invert
-          a.match(pattern).nil?
-        else
-          not a.match(pattern).nil?
-        end
-      end
+      result = (not a.match(pattern).nil?)
+      if invert then result = (not result) end
+      result
     }
   end
 end

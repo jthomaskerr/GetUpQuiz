@@ -92,3 +92,20 @@
         expected:
             - Max Moshier
         description: Precedence Override 1
+  -
+        rule: id = 1
+        expected:
+            - Cody Kinnaman
+        description: Test id's (there are overlapping id's and postcode_id's)
+  -
+        rule: id = 2 OR id=3
+        expected:
+            - Christian Hoying
+            - Max Moshier
+        description: Test id's (there are overlapping id's and postcode_id's) 2
+  -
+        rule: postcode_id = 1
+        expected:
+            - Cody Kinnaman
+            - Erik Pendergast
+        description: Test postcode_id's (there are overlapping id's and postcode_id's)

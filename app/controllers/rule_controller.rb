@@ -9,7 +9,7 @@ class RuleController < ApplicationController
   helper_method :postcode
   helper_method :execute
 
-  include PredicateEvaluator
+  include PeoplePredicateEvaluator
 
   def initialize
     @people = Person.load PEOPLE
