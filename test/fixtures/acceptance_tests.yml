@@ -1,0 +1,40 @@
+    -
+       rule: email LIKE "@hotmail"
+       expected: 
+           - Cody Kinnaman 
+           - Ted Kuehne
+       description: People with a hotmail address
+    -
+       rule: postcode != 2000
+       expected:
+           - Christian Hoying
+           - Max Moshier 
+           - Noreen Zacharias 
+           - Darren Radovich 
+           - Ted Kuehne 
+           - Clinton Banegas 
+           - Neil Ancona 
+           - Clare Straube
+       description: People who are not from postcode 2000
+    -
+       rule: postcode = 2000 OR postcode = 2010
+       expected:
+           - Cody Kinnaman
+           - Christian Hoying 
+           - Erik Pendergast 
+           - Ted Kuehne
+       description: People from postcodes 2000 or 2010
+    -
+       rule: postcode = 2010 AND email LIKE "@gmail"
+       expected:
+           - Christian Hoying
+       description: People from postcode 2010 with a gmail address
+    -  ### NOTE! Clinton Banegas was erroneously missing from the published acceptance criteria
+       rule: (postcode = 2060 OR postcode = 2061 OR postcode = 2065) AND email NOT LIKE "@gmail"
+       expected:
+           - Noreen Zacharias
+           - Darren Radovich 
+           - Clinton Banegas 
+           - Clare Straube
+       description: People from postcode 2060,  2061 or 2065 who do not use gmail
+

@@ -1,0 +1,94 @@
+  # A parser and interpreter needs exhaustive testing, with many more cases than shown below.
+  # I have just provided a representative sample of the types of tests necessary to excercise all permutations of the system
+
+  # Also, it would be preferrable to excercise the parser and interpreter separately, which would require implementing
+  # a test data-set and predicate evaluator. I have not done this because I think below gives a sufficient picture of my unit testing skills
+  -
+        rule: name = "Cody Kinnaman"
+        expected:
+            - Cody Kinnaman
+        description: Find exact name
+  -
+        rule: name = "Bob Dylan"
+        expected: []
+        description: Find exact name - no match
+  -
+        rule: name != "Bob Dylan"
+        expected:
+            - Cody Kinnaman
+            - Christian Hoying
+            - Max Moshier
+            - Noreen Zacharias
+            - Darren Radovich
+            - Erik Pendergast
+            - Ted Kuehne
+            - Clinton Banegas
+            - Neil Ancona
+            - Clare Straube
+        description: Not equals
+  -
+        rule: name LIKE "Kinnaman"
+        expected:
+            - Cody Kinnaman
+        description: Find partial name
+  -
+        rule: name LIKE "^C"
+        expected:
+            - Cody Kinnaman
+            - Christian Hoying
+            - Clinton Banegas
+            - Clare Straube
+        description: Find name pattern (first name starts with C)    # NB we're not here to test the regexp library so Ill leave it at this
+  -
+        rule: name NOT LIKE "^C"
+        expected:
+            - Max Moshier
+            - Noreen Zacharias
+            - Darren Radovich
+            - Erik Pendergast
+            - Ted Kuehne
+            - Neil Ancona
+        description: NOT LIKE (first name doesnt start with C)
+  -
+        rule: (name = "Cody Kinnaman")
+        expected:
+            - Cody Kinnaman
+        description: Parenthesised predicate
+  -
+        rule: name LIKE "^C" AND email LIKE "@gmail"
+        expected:
+            - Christian Hoying
+        description: AND operation
+  -
+        rule: name = "Christian Hoying" OR email LIKE "@hotmail"
+        expected:
+            - Cody Kinnaman
+            - Ted Kuehne
+            - Christian Hoying
+        description: OR operation
+  -
+        rule: (name LIKE "^C" AND email LIKE "@gmail")
+        expected:
+            - Christian Hoying
+        description: parenthesised AND operation
+  -
+        rule: ((name LIKE "^C") AND (email LIKE "@gmail"))
+        expected:
+            - Christian Hoying
+        description: parenthesised AND operation and Parenthesised predicates
+  -
+        rule: postcode = 2060 AND email LIKE "@hotmail"
+        expected: []
+        description: Disjoint sets
+  -
+        rule: postcode = 2060 AND email LIKE "@gmail" OR email LIKE "@hotmail"
+        expected:
+            - Max Moshier
+            - Cody Kinnaman
+            - Ted Kuehne
+        description: Precedence 1
+  -
+        rule: postcode = 2060 AND (email LIKE "@gmail" OR email LIKE "@hotmail")
+        expected:
+            - Max Moshier
+        description: Precedence Override 1

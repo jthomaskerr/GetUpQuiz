@@ -14,13 +14,14 @@ class RuleController < ApplicationController
   def initialize
     @people = Person.load PEOPLE
     @postcodes = Postcode.load POSTCODES
+
+    @parser = RuleParser.new
+    @interpreter = RuleInterpreter.new.context(:equals_op => method(:eval_equals), :like_op => method(:eval_like))
+
     @frm = nil
   end
 
   def index
-    people = @people
-    @parser = RuleParser.new
-    @interpreter = RuleInterpreter.new.context(:equals_op => method(:eval_equals), :like_op => method(:eval_like))
     @rule = params[:rule]
   end
 
