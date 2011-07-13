@@ -1,4 +1,4 @@
-require 'CSV'
+require 'csv'
 
 class CSV_Model
   attr_accessor :id
