@@ -1,6 +1,10 @@
 source 'http://rubygems.org'
 
-gem 'thin'
+group :production do
+  gem 'thin'
+  gem 'therubyracer-heroku', '0.8.1.pre3'
+end
+
 gem 'rails', '3.1.0.rc4'
 
 gem 'ruby-prof'
